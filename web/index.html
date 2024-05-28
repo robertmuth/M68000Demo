@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delta</title>
+  <style>
+    body,
+    #webgl-canvas,
+    html,
+    main {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      display: block;
+    }
+    main {
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      font-weight: bold;
+      font-size: 24px;
+      margin: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      background: black;
+    }
+    #play-button use {
+      fill: white;
+      display: none;
+    }
+    #error-overlay rect {
+      fill: black;
+    }
+    #error-overlay use {
+      fill: red;
+    }
+    #play-progress {
+      animation: spin-forever 1s normal infinite;
+      transform-origin: center;
+    }
+    @keyframes spin-forever {
+      from {
+        transform: rotate(0);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<svg style="display: none">
+  <defs>
+    <symbol id="symbol-progress" height="48" viewBox="0 -960 960 960" width="48"><path d="M480-80q-84 0-157-31t-127-85q-54-54-85-127T80-480q0-84 31-157t85-127q54-54 127-85t157-31q12 0 21 9t9 21q0 12-9 21t-21 9q-141 0-240.5 99.5T140-480q0 141 99.5 240.5T480-140q141 0 240.5-99.5T820-480q0-12 9-21t21-9q12 0 21 9t9 21q0 84-31 157t-85 127q-54 54-127 85T480-80Z"/></symbol>
+    <symbol id="symbol-play" height="48" viewBox="0 -960 960 960" width="48"><path d="M320-203v-560l440 280-440 280Zm60-280Zm0 171 269-171-269-171v342Z"/></symbol>
+    <symbol id="symbol-error" height="48" viewBox="0 -960 960 960" width="48"><path d="M479.982-280q14.018 0 23.518-9.482 9.5-9.483 9.5-23.5 0-14.018-9.482-23.518-9.483-9.5-23.5-9.5-14.018 0-23.518 9.482-9.5 9.483-9.5 23.5 0 14.018 9.482 23.518 9.483 9.5 23.5 9.5ZM453-433h60v-253h-60v253Zm27.266 353q-82.734 0-155.5-31.5t-127.266-86q-54.5-54.5-86-127.341Q80-397.681 80-480.5q0-82.819 31.5-155.659Q143-709 197.5-763t127.341-85.5Q397.681-880 480.5-880q82.819 0 155.659 31.5Q709-817 763-763t85.5 127Q880-563 880-480.266q0 82.734-31.5 155.5T763-197.684q-54 54.316-127 86Q563-80 480.266-80Zm.234-60Q622-140 721-239.5t99-241Q820-622 721.188-721 622.375-820 480-820q-141 0-240.5 98.812Q140-622.375 140-480q0 141 99.5 240.5t241 99.5Zm-.5-340Z"/></symbol>
+  </defs>
+</svg>
+
+<body>
+  <table id="controls" style="display: none">
+    <tr>
+      <td>
+        <div id=fps></div>
+      </td>
+      <td>
+        <form id=section_selectors></form>
+      </td>
+      <td>
+        Effect mode:
+        <input type=number id=effect_mode value=14 min=1 max=20>
+      </td>
+      <td>
+        <div id=timer></div>
+      </td>
+      <td>
+        <div id=azimuth></div>
+      </td>
+    </tr>
+  </table>
+  <form id="section_selectors"></form>
+  <main>
+    <canvas id="webgl-canvas"></canvas>
+    <div id="play-button" class="overlay">
+      <svg width="128" height="128" viewBox="0 0 48 48">
+        <use id="play-progress" href="#symbol-progress"></use>
+        <use id="play-play" href="#symbol-play"></use>
+      </svg>
+    </div>
+    <div id="error-overlay" class="overlay">
+      <svg width="128" height="128" viewBox="0 0 48 48">
+        <rect x="0" y="0" w="48" h="48"></rect>
+        <use href="#symbol-error"></use>
+      </svg>
+    </div>
+  </main>
+  <script defer src="delta.dart.js"></script>
+</body>
+
+</html>
